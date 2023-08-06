@@ -43,15 +43,20 @@ RUN update-ca-certificates \
 ENV CC="gcc-11"
 RUN ./autogen.sh && ./configure \
     --prefix "/usr/local" \
+    --with-included-regex \
+    --with-small-ja-dic \
     --with-pgtk \
     --with-json \
     --with-gnutls  \
     --with-rsvg  \
-    --without-xwidgets \
-    --without-xaw3d \
-    --with-mailutils \
+    --with-xwidgets \
+    --with-xaw3d \
+    --without-mailutils \
+    --without-pop \
+    --without-dbus \
+    --without-gpm \
     --with-native-compilation=aot \
-    CFLAGS="-O2 -pipe"
+    CFLAGS="-Ofast -fno-finite-math-only -fomit-frame-pointer"
 
 
 
@@ -65,7 +70,7 @@ Version: ${EMACS_VERSION}\n\
 Section: base\n\
 Priority: optional\n\
 Architecture: amd64\n\
-Depends: libtree-sitter0, libgif7, libotf1, libgccjit0, libgtk-3-0, librsvg2-2, libtiff5, libjansson4, libacl1, libgmp10, libwebp7, libsqlite3-0\n\
+Depends: libtree-sitter0, libgif7, libotf1, libgccjit0, libgtk-3-0, librsvg2-2, libtiff5, libjansson4, libacl1, libgmp10, libwebp7, webp, libsqlite3-0, libharfbuzz0b, libncurses5, libjpeg9, libpng16-16, libwebkit2gtk-4.0-37\n\
 Conflicts: emacs\n\
 Maintainer: konstare\n\
 Description: Emacs with native compilation, pure GTK and tree-sitter\n\
@@ -73,11 +78,15 @@ Description: Emacs with native compilation, pure GTK and tree-sitter\n\
     --with-json \
     --with-gnutls  \
     --with-rsvg  \
-    --without-xwidgets \
-    --without-xaw3d \
-    --with-mailutils \
+    --with-xwidgets \
+    --with-xaw3d \
+    --without-mailutils \
+    --without-gsettings \
+    --without-pop \
+    --without-dbus \
+    --without-gpm \
     --with-native-compilation=aot\
- CFLAGS='-O2 -pipe'" \
+ CFLAGS='-Ofast -fno-finite-math-only -fomit-frame-pointer'" \
     >> emacs-gcc-pgtk_${EMACS_VERSION}/DEBIAN/control \
     && echo "activate-noawait ldconfig" >> emacs-gcc-pgtk_${EMACS_VERSION}/DEBIAN/triggers \
     && cd /opt \
