@@ -31,6 +31,7 @@ RUN sed -i 's/# deb-src/deb-src/' /etc/apt/sources.list &&\
     libwebp-dev\
     libsqlite3-dev\
     texinfo\
+    libwebkit2gtk-4.0-dev \
     libtree-sitter-dev
 
 
